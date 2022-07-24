@@ -4,7 +4,7 @@ import Main from './Main';
 
 function App() {
   return (
-    <body className="root">
+    <div className="root">
       <Header />
       <Main />
       <Footer />
@@ -90,7 +90,7 @@ function App() {
           </div>
         </li>
       </template>
-  </body>
+  </div>
   );
 }
 
