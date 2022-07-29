@@ -1,13 +1,6 @@
-import Header from './Header';
-import Footer from './Footer';
-import Main from './Main';
-
-function App() {
-  return (
-    <div className="root">
-      <Header />
-      <Main />
-      <Footer />
+function PopupWithForm(props) {
+    return (
+    <>
       <div className="popup popup_profile popup_overlay-opacity_main">
         <div className="popup__container">
           <button className="popup__close-button button button_opacity_main" type="button" aria-label="кнопка закрыть форму редактирования профиля"></button>
@@ -46,13 +39,6 @@ function App() {
           </form>
         </div>
       </div>
-      <div className="popup popup_picture popup_overlay-opacity_high">
-        <figure className="popup__image-container">
-          <button className="popup__close-button button button_opacity_main" type="button" aria-label="кнопка закрыть просмотр изображения"></button>
-          <img className="popup__image" src="#" alt="" />
-          <figcaption className="popup__image-caption"></figcaption>
-        </figure>
-      </div>
       <div className="popup popup_replace-avatar popup_overlay-opacity_main">
         <div className="popup__container ">
           <button className="popup__close-button button button_opacity_main" type="button" aria-label="кнопка закрыть форму оновления аватара"></button>
@@ -77,21 +63,8 @@ function App() {
           </form>
         </div>
       </div>
-      <template className="new-card">
-        <li className="card">
-          <img className="card__picture" src="#" alt="" title="" />
-          <button className="card__delete-button button button_opacity_main"></button>
-          <div className="card__description">
-            <h2 className="card__caption"></h2>
-            <div className="card__like-block">
-              <button className="card__like-button button button_opacity_low" type="button" aria-label="кнопка лайк на карточке"></button>
-              <span className="card__likes">0</span>
-            </div>
-          </div>
-        </li>
-      </template>
-  </div>
-  );
+    </>
+    );
 }
 
-export default App;
+export default PopupWithForm;
