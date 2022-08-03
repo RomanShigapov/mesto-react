@@ -1,51 +1,99 @@
+import React from "react";
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
+import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup';
 
 function App() {
+
+  const [isOpen, setIsOpen] = React.useState({
+    isEditProfilePopupOpen: false,
+    isAddPlacePopupOpen: false,
+    isEditAvatarPopupOpen: false
+  });
+
+  function handleEditProfileClick() {
+    setIsOpen({
+      ...isOpen,
+      isEditProfilePopupOpen: true
+    });
+  }
+
+  function handleAddPlaceClick() {
+    setIsOpen({
+      ...isOpen,
+      isAddPlacePopupOpen: true
+    });
+  }
+
+  function handleEditAvatarClick() {
+    setIsOpen({
+      ...isOpen,
+      isEditAvatarPopupOpen: true
+    });
+  }
+
   return (
     <div className="root">
       <Header />
-      <Main />
+      <Main
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
+        onEditAvatar={handleEditAvatarClick}
+      />
       <Footer />
-      <div className="popup popup_profile popup_overlay-opacity_main">
-        <div className="popup__container">
-          <button className="popup__close-button button button_opacity_main" type="button" aria-label="кнопка закрыть форму редактирования профиля"></button>
-          <h2 className="popup__title">Редактировать профиль</h2>
-          <form className="popup__form" name="profile-form">
-            <fieldset className="popup__form-inputs">
-              <div className="popup__form-container">
-                <input className="popup__form-input popup__form-input_profile-name" name="name" placeholder="Введите имя профиля" type="text" required minLength="2" maxLength="40" />
-                <span className="popup__form-input-error name-error"></span>
-              </div>
-              <div className="popup__form-container">
-                <input className="popup__form-input popup__form-input_profile-description" name="description" placeholder="Введите род деятельности" type="text" required minLength="2" maxLength="200" />
-                <span className="popup__form-input-error description-error"></span>
-              </div>
-            </fieldset>
-            <button className="popup__form-save-button button button_opacity_high" type="submit">Сохранить</button>
-          </form>
-        </div>
-      </div>
-      <div className="popup popup_new-card popup_overlay-opacity_main">
-        <div className="popup__container ">
-          <button className="popup__close-button button button_opacity_main" type="button" aria-label="кнопка закрыть форму добавления новой карточки"></button>
-          <h2 className="popup__title">Новое место</h2>
-          <form className="popup__form" name="new-card-form">
-            <fieldset className="popup__form-inputs">
-              <div className="popup__form-container">
-                <input className="popup__form-input popup__form-input_new-card-name" name="name" placeholder="Название" type="text" required minLength="2" maxLength="30" />
-                <span className="popup__form-input-error name-error"></span>
-              </div>
-              <div className="popup__form-container">
-                <input className="popup__form-input popup__form-input_new-card-image-link" name="link" placeholder="Ссылка на картинку" type="url" required />
-                <span className="popup__form-input-error link-error"></span>
-              </div>
-            </fieldset>
-            <button className="popup__form-save-button button button_opacity_high" type="submit">Создать</button>
-          </form>
-        </div>
-      </div>
+      {/* Попап профайла */}
+      <PopupWithForm
+        isOpen={isOpen.isEditProfilePopupOpen}
+        name="profile"
+        title="Редактировать профиль"
+        button="Сохранить"
+      >
+        <fieldset className="popup__form-inputs">
+          <div className="popup__form-container">
+            <input className="popup__form-input popup__form-input_profile-name" name="name" placeholder="Введите имя профиля" type="text" required minLength="2" maxLength="40" />
+            <span className="popup__form-input-error name-error"></span>
+          </div>
+          <div className="popup__form-container">
+            <input className="popup__form-input popup__form-input_profile-description" name="description" placeholder="Введите род деятельности" type="text" required minLength="2" maxLength="200" />
+            <span className="popup__form-input-error description-error"></span>
+          </div>
+        </fieldset>
+      </PopupWithForm>
+      {/* Попап новой карточки */}
+      <PopupWithForm
+        isOpen={isOpen.isAddPlacePopupOpen}
+        name="new-card"
+        title="Новое место"
+        button="Создать"
+      >
+        <fieldset className="popup__form-inputs">
+          <div className="popup__form-container">
+            <input className="popup__form-input popup__form-input_new-card-name" name="name" placeholder="Название" type="text" required minLength="2" maxLength="30" />
+            <span className="popup__form-input-error name-error"></span>
+          </div>
+          <div className="popup__form-container">
+            <input className="popup__form-input popup__form-input_new-card-image-link" name="link" placeholder="Ссылка на картинку" type="url" required />
+            <span className="popup__form-input-error link-error"></span>
+          </div>
+        </fieldset>
+      </PopupWithForm>
+      {/* Попап редактирования аватара */}
+      <PopupWithForm
+        isOpen={isOpen.isEditAvatarPopupOpen}
+        name="replace-avatar"
+        title="Обновить аватар"
+        button="Сохранить"
+      >
+        <fieldset className="popup__form-inputs">
+          <div className="popup__form-container">
+            <input className="popup__form-input popup__form-input_new-card-image-link" name="link" placeholder="Ссылка на картинку" type="url" required />
+            <span className="popup__form-input-error link-error"></span>
+          </div>
+        </fieldset>
+      </PopupWithForm>
+
       <div className="popup popup_picture popup_overlay-opacity_high">
         <figure className="popup__image-container">
           <button className="popup__close-button button button_opacity_main" type="button" aria-label="кнопка закрыть просмотр изображения"></button>
@@ -53,21 +101,7 @@ function App() {
           <figcaption className="popup__image-caption"></figcaption>
         </figure>
       </div>
-      <div className="popup popup_replace-avatar popup_overlay-opacity_main">
-        <div className="popup__container ">
-          <button className="popup__close-button button button_opacity_main" type="button" aria-label="кнопка закрыть форму оновления аватара"></button>
-          <h2 className="popup__title">Обновить аватар</h2>
-          <form className="popup__form" name="replace-avatar-form">
-            <fieldset className="popup__form-inputs">
-              <div className="popup__form-container">
-                <input className="popup__form-input popup__form-input_new-card-image-link" name="link" placeholder="Ссылка на картинку" type="url" required />
-                <span className="popup__form-input-error link-error"></span>
-              </div>
-            </fieldset>
-            <button className="popup__form-save-button button button_opacity_high" type="submit">Сохранить</button>
-          </form>
-        </div>
-      </div>
+
       <div className="popup popup_delete-card popup_overlay-opacity_high">
         <div className="popup__container">
           <button className="popup__close-button button button_opacity_main" type="button" aria-label="кнопка закрыть форму удаления карточки"></button>
