@@ -1,14 +1,37 @@
+import React from "react";
+import defaultAvatar from '../images/profile.jpg';
+import Api from '../utils/Api';
+
 function Main(props) {
+
+  const [userName, setUserName] = React.useState('Загрузка...');
+  const [userDescription, setUserDescription] = React.useState('...данных');
+  const [userAvatar, setUserAvatar] = React.useState(defaultAvatar);
+
+  let Counter = 1;
+
+  React.useEffect(() => {
+    Api.getUserInfo()
+      .then(userData => {
+        setUserName(userData.name);
+        setUserDescription(userData.about);
+        setUserAvatar(userData.avatar);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  },[]);
+
   return (
     <main className="content page-section">
       <section className="profile" aria-label="Секция профиля пользователя">
         <button onClick={props.onEditAvatar} className="profile__replace-avatar" type="button">
-          <img className="profile__avatar" src="../images/profile.jpg" alt="аватар"/>
+          <img className="profile__avatar" src={userAvatar} alt="аватар"/>
         </button>
         <div className="profile__info">
-          <h1 className="profile__name">Загрузка...</h1>
+          <h1 className="profile__name">{userName}</h1>
           <button onClick={props.onEditProfile} className="profile__edit-button button button_opacity_main" type="button" aria-label="вызов формы редактирования профиля"></button>
-          <p className="profile__description"></p>
+          <p className="profile__description">{userDescription}</p>
         </div>
           <button onClick={props.onAddPlace} className="profile__add-button button button_opacity_main" type="button" aria-label="выхов формы добавления карточки места"></button>
       </section>

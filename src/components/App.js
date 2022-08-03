@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
@@ -34,6 +34,14 @@ function App() {
     });
   }
 
+  function closeAllPopups() {
+    setIsOpen({
+      isEditProfilePopupOpen: false,
+      isAddPlacePopupOpen: false,
+      isEditAvatarPopupOpen: false
+    });
+  }
+
   return (
     <div className="root">
       <Header />
@@ -46,6 +54,7 @@ function App() {
       {/* Попап профайла */}
       <PopupWithForm
         isOpen={isOpen.isEditProfilePopupOpen}
+        onClose={closeAllPopups}
         name="profile"
         title="Редактировать профиль"
         button="Сохранить"
@@ -64,6 +73,7 @@ function App() {
       {/* Попап новой карточки */}
       <PopupWithForm
         isOpen={isOpen.isAddPlacePopupOpen}
+        onClose={closeAllPopups}
         name="new-card"
         title="Новое место"
         button="Создать"
@@ -82,6 +92,7 @@ function App() {
       {/* Попап редактирования аватара */}
       <PopupWithForm
         isOpen={isOpen.isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
         name="replace-avatar"
         title="Обновить аватар"
         button="Сохранить"
