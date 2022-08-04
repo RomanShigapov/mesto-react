@@ -1,6 +1,7 @@
 import React from "react";
 import defaultAvatar from '../images/profile.jpg';
 import Api from '../utils/Api';
+import Card from "./Card";
 
 function Main(props) {
 
@@ -46,19 +47,7 @@ function Main(props) {
       <section className="places" aria-label="Секция карточек мест">
         <ul className="places__grid-items">
           {cards.map(card => {
-            return (
-            <li className="card" key={card._id}>
-              <img className="card__picture" src={card.link} alt={card.name} title="" />
-              <button className="card__delete-button button button_opacity_main"></button>
-              <div className="card__description">
-                <h2 className="card__caption">{card.name}</h2>
-                <div className="card__like-block">
-                  <button className="card__like-button button button_opacity_low" type="button" aria-label="кнопка лайк на карточке"></button>
-                  <span className="card__likes">{card.likes.length}</span>
-                </div>
-              </div>
-            </li>
-            )
+            return <Card card={card} key={card._id} onCardClick={props.onCardClick}/>
           })}
         </ul>
       </section>

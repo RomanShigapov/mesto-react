@@ -13,6 +13,12 @@ function App() {
     isEditAvatarPopupOpen: false
   });
 
+  const [selectedCard, setSelectedCard] = React.useState({
+      name: '',
+      link: '',
+      isOpen: false
+  });
+
   function handleEditProfileClick() {
     setIsOpen({
       ...isOpen,
@@ -34,11 +40,25 @@ function App() {
     });
   }
 
+  function handleCardClick({card}) {
+    setSelectedCard({
+      name: card.name,
+      link: card.link,
+      isOpen: true
+    });
+  }
+
   function closeAllPopups() {
     setIsOpen({
       isEditProfilePopupOpen: false,
       isAddPlacePopupOpen: false,
       isEditAvatarPopupOpen: false
+    });
+
+    setSelectedCard({
+      name: '',
+      link: '',
+      isOpen: false
     });
   }
 
@@ -49,6 +69,7 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         onEditAvatar={handleEditAvatarClick}
+        onCardClick={handleCardClick}
       />
       <Footer />
       {/* Попап профайла */}
@@ -104,6 +125,7 @@ function App() {
           </div>
         </fieldset>
       </PopupWithForm>
+      <ImagePopup onClose={closeAllPopups} card={selectedCard} />
 
       <div className="popup popup_picture popup_overlay-opacity_high">
         <figure className="popup__image-container">
@@ -122,19 +144,6 @@ function App() {
           </form>
         </div>
       </div>
-      <template className="new-card">
-        <li className="card">
-          <img className="card__picture" src="#" alt="" title="" />
-          <button className="card__delete-button button button_opacity_main"></button>
-          <div className="card__description">
-            <h2 className="card__caption"></h2>
-            <div className="card__like-block">
-              <button className="card__like-button button button_opacity_low" type="button" aria-label="кнопка лайк на карточке"></button>
-              <span className="card__likes">0</span>
-            </div>
-          </div>
-        </li>
-      </template>
   </div>
   );
 }
