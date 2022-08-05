@@ -40,10 +40,10 @@ function App() {
     });
   }
 
-  function handleCardClick({card}) {
+  function handleCardClick({name, link}) {
     setSelectedCard({
-      name: card.name,
-      link: card.link,
+      name: name,
+      link: link,
       isOpen: true
     });
   }
@@ -126,25 +126,7 @@ function App() {
         </fieldset>
       </PopupWithForm>
       <ImagePopup onClose={closeAllPopups} card={selectedCard} />
-
-      <div className="popup popup_picture popup_overlay-opacity_high">
-        <figure className="popup__image-container">
-          <button className="popup__close-button button button_opacity_main" type="button" aria-label="кнопка закрыть просмотр изображения"></button>
-          <img className="popup__image" src="#" alt="" />
-          <figcaption className="popup__image-caption"></figcaption>
-        </figure>
-      </div>
-
-      <div className="popup popup_delete-card popup_overlay-opacity_high">
-        <div className="popup__container">
-          <button className="popup__close-button button button_opacity_main" type="button" aria-label="кнопка закрыть форму удаления карточки"></button>
-          <h2 className="popup__title">Вы уверены?</h2>
-          <form className="popup__form" name="delete-card-confirmation-form">
-            <button className="popup__form-save-button button button_opacity_high" type="submit">Да</button>
-          </form>
-        </div>
-      </div>
-  </div>
+    </div>
   );
 }
 
