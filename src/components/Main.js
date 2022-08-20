@@ -1,5 +1,5 @@
 import React from "react";
-import defaultAvatar from '../images/profile.jpg';
+
 import Api from '../utils/Api';
 import Card from "./Card";
 

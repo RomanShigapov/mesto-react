@@ -4,8 +4,17 @@ import Footer from './Footer';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import defaultAvatar from '../images/profile.jpg';
 
 function App() {
+
+  const [currentUser, setCurrentUser] = React.useState({
+    name: 'Загрузка...',
+    about: '...данных',
+    avatar: defaultAvatar
+  });
+
+
 
   const [isOpen, setIsOpen] = React.useState({
     isEditProfilePopupOpen: false,
@@ -61,6 +70,20 @@ function App() {
       isOpen: false
     });
   }
+
+  React.useEffect(() => {
+    Api.getUserInfo()
+      .then(userData => {
+        setCurrentUser({
+          name: userData.name,
+          about: userData.about,
+          avatar: userData.avatar
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },[]);
 
   return (
     <div className="root">
