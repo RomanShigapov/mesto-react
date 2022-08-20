@@ -5,14 +5,16 @@ import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import defaultAvatar from '../images/profile.jpg';
-import CurrentUserContext from "../contexts/CurrentUserContext";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import Api from '../utils/Api';
 
 function App() {
 
   const [currentUser, setCurrentUser] = React.useState({
     name: 'Загрузка...',
     about: '...данных',
-    avatar: defaultAvatar
+    avatar: defaultAvatar,
+    _id: ''
   });
 
 
@@ -78,12 +80,13 @@ function App() {
         setCurrentUser({
           name: userData.name,
           about: userData.about,
-          avatar: userData.avatar
+          avatar: userData.avatar,
+          _id: userData._id
         });
       })
       .catch((err) => {
         console.log(err);
-      });
+      })
   },[]);
 
   return (
