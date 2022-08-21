@@ -45,8 +45,8 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    Api.deleteCard(card._id).
-      then((newCard) => {
+    Api.deleteCard(card._id)
+    .then((newCard) => {
         setCards((state) => state.filter((item) => {return item._id !== card._id;}))
     });
   }
