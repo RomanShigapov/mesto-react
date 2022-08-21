@@ -1,5 +1,0 @@
-.page-section {
-  display: grid;
-  grid-template-columns: minmax(320px, 880px);
-  align-self: center;
-}
