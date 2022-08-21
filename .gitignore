@@ -1,8 +1,1 @@
-node_modules/
-public/
-src/
-*.json
-*.md
-*.txt
-build/
-!build/**
+node_modules
