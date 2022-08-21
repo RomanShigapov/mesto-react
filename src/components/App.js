@@ -1,12 +1,13 @@
 import React from 'react';
+import Api from '../utils/Api';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
-import defaultAvatar from '../images/profile.jpg';
+import EditProfilePopup from './EditProfilePopup';
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import Api from '../utils/Api';
+import defaultAvatar from '../images/profile.jpg';
 
 function App() {
 
@@ -16,8 +17,6 @@ function App() {
     avatar: defaultAvatar,
     _id: ''
   });
-
-
 
   const [isOpen, setIsOpen] = React.useState({
     isEditProfilePopupOpen: false,
@@ -101,24 +100,7 @@ function App() {
         />
         <Footer />
         {/* Попап профайла */}
-        <PopupWithForm
-          isOpen={isOpen.isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          name="profile"
-          title="Редактировать профиль"
-          button="Сохранить"
-        >
-          <fieldset className="popup__form-inputs">
-            <div className="popup__form-container">
-              <input className="popup__form-input popup__form-input_profile-name" name="name" placeholder="Введите имя профиля" type="text" required minLength="2" maxLength="40" />
-              <span className="popup__form-input-error name-error"></span>
-            </div>
-            <div className="popup__form-container">
-              <input className="popup__form-input popup__form-input_profile-description" name="description" placeholder="Введите род деятельности" type="text" required minLength="2" maxLength="200" />
-              <span className="popup__form-input-error description-error"></span>
-            </div>
-          </fieldset>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isOpen.isEditProfilePopupOpen} onClose={closeAllPopups} />
         {/* Попап новой карточки */}
         <PopupWithForm
           isOpen={isOpen.isAddPlacePopupOpen}
