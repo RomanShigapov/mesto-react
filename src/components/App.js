@@ -33,6 +33,24 @@ function App() {
       isOpen: false
   });
 
+  const [cards, setCards] = React.useState([]);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+
+    Api.setCardLike(card._id, !isLiked)
+      .then((retCard) => {
+        setCards((state) => state.map((item) => item._id === card._id ? retCard : item));
+      });
+  }
+
+  function handleCardDelete(card) {
+    Api.deleteCard(card._id).
+      then((newCard) => {
+        setCards((state) => state.filter((item) => {return item._id !== card._id;}))
+    });
+  }
+
   function handleEditProfileClick() {
     setIsOpen({
       ...isOpen,
@@ -118,6 +136,16 @@ function App() {
       })
   },[]);
 
+  React.useEffect(() => {
+    Api.getCardsList()
+      .then(cards => {
+        setCards([...cards])
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  },[]);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="root">
@@ -128,6 +156,9 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
           avatarRef={avatarRef}
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
         <Footer />
         {/* Попап профайла */}

@@ -1,39 +1,10 @@
 import React from "react";
-import Api from '../utils/Api';
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
 
   const currentUser = React.useContext(CurrentUserContext);
-
-  const [cards, setCards] = React.useState([]);
-
-  function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-    Api.setCardLike(card._id, !isLiked)
-      .then((retCard) => {
-        setCards((state) => state.map((item) => item._id === card._id ? retCard : item));
-      });
-  }
-
-  function handleCardDelete(card) {
-    Api.deleteCard(card._id).
-      then((newCard) => {
-        setCards((state) => state.filter((item) => {return item._id !== card._id;}))
-    });
-  }
-
-  React.useEffect(() => {
-    Api.getCardsList()
-      .then(cards => {
-        setCards([...cards])
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  },[]);
 
   return (
     <main className="content page-section">
@@ -50,8 +21,8 @@ function Main(props) {
       </section>
       <section className="places" aria-label="Секция карточек мест">
         <ul className="places__grid-items">
-          {cards.map(card => {
-            return <Card card={card} key={card._id} onCardClick={props.onCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>
+          {props.cards.map(card => {
+            return <Card card={card} key={card._id} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete}/>
           })}
         </ul>
       </section>
