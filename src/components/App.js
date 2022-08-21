@@ -3,10 +3,10 @@ import Api from '../utils/Api';
 import Header from './Header';
 import Footer from './Footer';
 import Main from './Main';
-import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import defaultAvatar from '../images/profile.jpg';
 
@@ -121,6 +121,18 @@ function App() {
     });
   }
 
+  function handleAddPlace({ name, link }) {
+    Api.addCard({ name, link })
+    .then((card) => {
+      setCards([card, ...cards]);
+
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
   React.useEffect(() => {
     Api.getUserInfo()
       .then(user => {
@@ -161,32 +173,16 @@ function App() {
           onCardDelete={handleCardDelete}
         />
         <Footer />
-        {/* Попап профайла */}
         <EditProfilePopup
           isOpen={isOpen.isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
         />
-        {/* Попап новой карточки */}
-        <PopupWithForm
+        <AddPlacePopup
           isOpen={isOpen.isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          name="new-card"
-          title="Новое место"
-          button="Создать"
-        >
-          <fieldset className="popup__form-inputs">
-            <div className="popup__form-container">
-              <input className="popup__form-input popup__form-input_new-card-name" name="name" placeholder="Название" type="text" required minLength="2" maxLength="30" />
-              <span className="popup__form-input-error name-error"></span>
-            </div>
-            <div className="popup__form-container">
-              <input className="popup__form-input popup__form-input_new-card-image-link" name="link" placeholder="Ссылка на картинку" type="url" required />
-              <span className="popup__form-input-error link-error"></span>
-            </div>
-          </fieldset>
-        </PopupWithForm>
-        {/* Попап редактирования аватара */}
+          onAddPlace={handleAddPlace}
+        />
         <EditAvatarPopup
           isOpen={isOpen.isEditAvatarPopupOpen}
           onClose={closeAllPopups}

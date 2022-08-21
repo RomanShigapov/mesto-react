@@ -7,8 +7,8 @@ function EditProfilePopup(props) {
   const currentUser = React.useContext(CurrentUserContext);
 
   const [profile, setProfile] = React.useState({
-    name: 'Test',
-    description: 'testovich'
+    name: '',
+    about: ''
   });
 
   function handleProfileChange(evt) {
@@ -21,17 +21,11 @@ function EditProfilePopup(props) {
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    props.onUpdateUser({
-      name: profile.name,
-      about: profile.description
-    }, evt);
+    props.onUpdateUser(profile);
   }
 
   React.useEffect(() => {
-    setProfile({
-      name: currentUser.name,
-      description: currentUser.about
-    })
+    setProfile(currentUser);
    },[currentUser]);
 
   return (
@@ -49,7 +43,7 @@ function EditProfilePopup(props) {
           <span className="popup__form-input-error name-error"></span>
         </div>
         <div className="popup__form-container">
-          <input className="popup__form-input popup__form-input_profile-description" value={profile.description} onChange={handleProfileChange} name="description" placeholder="Введите род деятельности" type="text" required minLength="2" maxLength="200" />
+          <input className="popup__form-input popup__form-input_profile-description" value={profile.about} onChange={handleProfileChange} name="about" placeholder="Введите род деятельности" type="text" required minLength="2" maxLength="200" />
           <span className="popup__form-input-error description-error"></span>
         </div>
       </fieldset>
