@@ -2,6 +2,7 @@
 # 11-я проектная работа - Mesto-react.
 Яндекс.Практикум курс Web-разработчик студент Роман Шигапов.
 
+2 ночи не могу чертовы pages сделать...
 [Проект на GitHub Pages](https://RomanShigapov.github.io/mesto-react/)
 
 ### Описание
