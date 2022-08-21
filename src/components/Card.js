@@ -1,7 +1,7 @@
 import React from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-function Card({card, onCardClick}) {
+function Card({card, onCardClick, onCardLike, onCardDelete}) {
 
   const currentUser = React.useContext(CurrentUserContext);
 
@@ -23,14 +23,22 @@ function Card({card, onCardClick}) {
     onCardClick(card);
   }
 
+  function handleLikeClick() {
+    onCardLike(card);
+  }
+
+  function handleDeleteClick() {
+    onCardDelete(card);
+  }
+
   return(
     <li className="card">
       <img onClick={handleClick} className="card__picture" src={card.link} alt={card.name} title="" />
-      <button className={cardDeleteButtonClassName}></button>
+      <button className={cardDeleteButtonClassName} onClick={handleDeleteClick}></button>
       <div className="card__description">
         <h2 className="card__caption">{card.name}</h2>
         <div className="card__like-block">
-          <button className={cardLikeButtonClassName} type="button" aria-label="кнопка лайк на карточке"></button>
+          <button className={cardLikeButtonClassName} onClick={handleLikeClick} type="button" aria-label="кнопка лайк на карточке"></button>
           <span className="card__likes">{card.likes.length}</span>
         </div>
       </div>
