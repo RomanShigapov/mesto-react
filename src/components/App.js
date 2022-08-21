@@ -59,6 +59,21 @@ function App() {
     });
   }
 
+  function handleUpdateUser({name, about}) {
+    Api.setUserInfo({name, about})
+    .then(user => {
+      setCurrentUser({
+        ...currentUser,
+        name: user.name,
+        about: user.about,
+      });
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
   function closeAllPopups() {
     setIsOpen({
       isEditProfilePopupOpen: false,
@@ -75,12 +90,12 @@ function App() {
 
   React.useEffect(() => {
     Api.getUserInfo()
-      .then(userData => {
+      .then(user => {
         setCurrentUser({
-          name: userData.name,
-          about: userData.about,
-          avatar: userData.avatar,
-          _id: userData._id
+          name: user.name,
+          about: user.about,
+          avatar: user.avatar,
+          _id: user._id
         });
       })
       .catch((err) => {
@@ -100,7 +115,11 @@ function App() {
         />
         <Footer />
         {/* Попап профайла */}
-        <EditProfilePopup isOpen={isOpen.isEditProfilePopupOpen} onClose={closeAllPopups} />
+        <EditProfilePopup
+          isOpen={isOpen.isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+          onUpdateUser={handleUpdateUser}
+        />
         {/* Попап новой карточки */}
         <PopupWithForm
           isOpen={isOpen.isAddPlacePopupOpen}
