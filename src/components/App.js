@@ -6,10 +6,13 @@ import Main from './Main';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import defaultAvatar from '../images/profile.jpg';
 
 function App() {
+
+  const avatarRef = React.useRef();
 
   const [currentUser, setCurrentUser] = React.useState({
     name: 'Загрузка...',
@@ -65,8 +68,20 @@ function App() {
       setCurrentUser({
         ...currentUser,
         name: user.name,
-        about: user.about,
+        about: user.about
       });
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+  function handleUpdateAvatar(avatar) {
+    Api.setUserPic(avatar)
+    .then(user => {
+      avatarRef.current.src = user.avatar;
+
       closeAllPopups();
     })
     .catch((err) => {
@@ -112,6 +127,7 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
+          avatarRef={avatarRef}
         />
         <Footer />
         {/* Попап профайла */}
@@ -140,20 +156,11 @@ function App() {
           </fieldset>
         </PopupWithForm>
         {/* Попап редактирования аватара */}
-        <PopupWithForm
+        <EditAvatarPopup
           isOpen={isOpen.isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          name="replace-avatar"
-          title="Обновить аватар"
-          button="Сохранить"
-        >
-          <fieldset className="popup__form-inputs">
-            <div className="popup__form-container">
-              <input className="popup__form-input popup__form-input_new-card-image-link" name="link" placeholder="Ссылка на картинку" type="url" required />
-              <span className="popup__form-input-error link-error"></span>
-            </div>
-          </fieldset>
-        </PopupWithForm>
+          onUpdateAvatar={handleUpdateAvatar}
+        />
         <ImagePopup onClose={closeAllPopups} card={selectedCard} />
       </div>
     </CurrentUserContext.Provider>

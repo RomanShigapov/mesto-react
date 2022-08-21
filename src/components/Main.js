@@ -39,7 +39,7 @@ function Main(props) {
     <main className="content page-section">
       <section className="profile" aria-label="Секция профиля пользователя">
         <button onClick={props.onEditAvatar} className="profile__replace-avatar" type="button">
-          <img className="profile__avatar" src={currentUser.avatar} alt="аватар"/>
+          <img className="profile__avatar" ref={props.avatarRef} src={currentUser.avatar} alt="аватар"/>
         </button>
         <div className="profile__info">
           <h1 className="profile__name">{currentUser.name}</h1>
