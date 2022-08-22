@@ -19,13 +19,9 @@ function App() {
     _id: ''
   });
 
-  const [isOpen, setIsOpen] = useState({
-    isEditProfilePopupOpen: false,
-    isAddPlacePopupOpen: false,
-    isEditAvatarPopupOpen: false
-  });
-
-
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
 
   const [selectedCard, setSelectedCard] = useState({
@@ -59,24 +55,15 @@ function App() {
   }
 
   function handleEditProfileClick() {
-    setIsOpen({
-      ...isOpen,
-      isEditProfilePopupOpen: true
-    });
+    setIsEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick() {
-    setIsOpen({
-      ...isOpen,
-      isAddPlacePopupOpen: true
-    });
+    setIsAddPlacePopupOpen(true);
   }
 
   function handleEditAvatarClick() {
-    setIsOpen({
-      ...isOpen,
-      isEditAvatarPopupOpen: true
-    });
+    setIsEditAvatarPopupOpen(true);
   }
 
   function handleCardClick({name, link}) {
@@ -112,11 +99,9 @@ function App() {
   }
 
   function closeAllPopups() {
-    setIsOpen({
-      isEditProfilePopupOpen: false,
-      isAddPlacePopupOpen: false,
-      isEditAvatarPopupOpen: false
-    });
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
 
     setSelectedCard({
       name: '',
@@ -172,17 +157,17 @@ function App() {
         />
         <Footer />
         <EditProfilePopup
-          isOpen={isOpen.isEditProfilePopupOpen}
+          isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
         />
         <AddPlacePopup
-          isOpen={isOpen.isAddPlacePopupOpen}
+          isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlace}
         />
         <EditAvatarPopup
-          isOpen={isOpen.isEditAvatarPopupOpen}
+          isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
         />
