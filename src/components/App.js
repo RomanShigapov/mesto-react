@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import Api from '../utils/Api';
 import Header from './Header';
 import Footer from './Footer';
@@ -12,26 +12,29 @@ import defaultAvatar from '../images/profile.jpg';
 
 function App() {
 
-  const [currentUser, setCurrentUser] = React.useState({
+  const [currentUser, setCurrentUser] = useState({
     name: 'Загрузка...',
     about: '...данных',
     avatar: defaultAvatar,
     _id: ''
   });
 
-  const [isOpen, setIsOpen] = React.useState({
+  const [isOpen, setIsOpen] = useState({
     isEditProfilePopupOpen: false,
     isAddPlacePopupOpen: false,
     isEditAvatarPopupOpen: false
   });
 
-  const [selectedCard, setSelectedCard] = React.useState({
+
+
+
+  const [selectedCard, setSelectedCard] = useState({
       name: '',
       link: '',
       isOpen: false
   });
 
-  const [cards, setCards] = React.useState([]);
+  const [cards, setCards] = useState([]);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -134,7 +137,7 @@ function App() {
     });
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     Api.getUserInfo()
       .then(user => {
         setCurrentUser(user);
@@ -144,7 +147,7 @@ function App() {
       })
   },[]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Api.getCardsList()
       .then(cards => {
         setCards([...cards])

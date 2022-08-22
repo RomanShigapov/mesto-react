@@ -1,9 +1,9 @@
-import React from "react";
+import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 function Card({card, onCardClick, onCardLike, onCardDelete}) {
 
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
 
   const isOwn = card.owner._id === currentUser._id;
 
@@ -11,10 +11,7 @@ function Card({card, onCardClick, onCardLike, onCardDelete}) {
     `card__delete-button button button_opacity_main ${isOwn ? 'card__delete-button_visible' : 'card__delete-button_hidden'}`
   );
 
-  // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
   const isLiked = card.likes.some(i => i._id === currentUser._id);
-
-  // Создаём переменную, которую после зададим в `className` для кнопки лайка
   const cardLikeButtonClassName = (
     `card__like-button button button_opacity_low ${isLiked ? 'card__like-button_liked' : ''}`
   );
