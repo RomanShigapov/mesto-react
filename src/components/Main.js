@@ -22,8 +22,17 @@ function Main(props) {
       <section className="places" aria-label="Секция карточек мест">
         <ul className="places__grid-items">
           {props.cards.map(card => {
-            return <Card card={card} key={card._id} onCardClick={props.onCardClick} onCardLike={props.onCardLike} onCardDelete={props.onCardDelete}/>
-          })}
+            return (
+              <Card
+                card={card}
+                key={card._id}
+                onCardClick={props.onCardClick}
+                onCardLike={props.onCardLike}
+                onCardDelete={props.onCardDelete}
+              />
+            )
+          })
+          }
         </ul>
       </section>
     </main>
