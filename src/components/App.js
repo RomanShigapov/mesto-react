@@ -12,8 +12,6 @@ import defaultAvatar from '../images/profile.jpg';
 
 function App() {
 
-  const avatarRef = React.useRef();
-
   const [currentUser, setCurrentUser] = React.useState({
     name: 'Загрузка...',
     about: '...данных',
@@ -89,11 +87,8 @@ function App() {
   function handleUpdateUser({name, about}) {
     Api.setUserInfo({name, about})
     .then(user => {
-      setCurrentUser({
-        ...currentUser,
-        name: user.name,
-        about: user.about
-      });
+      setCurrentUser(user);
+
       closeAllPopups();
     })
     .catch((err) => {
@@ -104,7 +99,7 @@ function App() {
   function handleUpdateAvatar(avatar) {
     Api.setUserPic(avatar)
     .then(user => {
-      avatarRef.current.src = user.avatar;
+      setCurrentUser(user);
 
       closeAllPopups();
     })
@@ -142,12 +137,7 @@ function App() {
   React.useEffect(() => {
     Api.getUserInfo()
       .then(user => {
-        setCurrentUser({
-          name: user.name,
-          about: user.about,
-          avatar: user.avatar,
-          _id: user._id
-        });
+        setCurrentUser(user);
       })
       .catch((err) => {
         console.log(err);
@@ -173,7 +163,6 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
-          avatarRef={avatarRef}
           cards={cards}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
