@@ -41,6 +41,9 @@ function App() {
     Api.setCardLike(card._id, !isLiked)
       .then((retCard) => {
         setCards((state) => state.map((item) => item._id === card._id ? retCard : item));
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 
@@ -48,6 +51,9 @@ function App() {
     Api.deleteCard(card._id)
     .then((newCard) => {
         setCards((state) => state.filter((item) => {return item._id !== card._id;}))
+    })
+    .catch((err) => {
+      console.log(err);
     });
   }
 
