@@ -1,28 +1,22 @@
 import { useState, useEffect} from 'react';
 import PopupWithForm from './PopupWithForm';
+import useForm from '../hooks/useForm';
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
 
-  const [card, setCard] = useState({
+  const {values, handleChange, setValues} = useForm({
     name: '',
     link: ''
   });
 
-  function handleCardChange(evt) {
-    setCard({
-      ...card,
-      [evt.target.name]: evt.target.value,
-    })
-  }
-
   function handleSubmit(evt) {
     evt.preventDefault();
 
-    onAddPlace(card);
+    onAddPlace(values);
   }
 
   useEffect(() => {
-    setCard({
+    setValues({
         name: '',
         link: ''
       });
@@ -41,11 +35,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
     >
       <fieldset className="popup__form-inputs">
         <div className="popup__form-container">
-          <input className="popup__form-input popup__form-input_new-card-name" value={card.name} onChange={handleCardChange} name="name" placeholder="Название" type="text" required minLength="2" maxLength="30" />
+          <input className="popup__form-input popup__form-input_new-card-name" value={values.name} onChange={handleChange} name="name" placeholder="Название" type="text" required minLength="2" maxLength="30" />
           <span className="popup__form-input-error name-error"></span>
         </div>
         <div className="popup__form-container">
-          <input className="popup__form-input popup__form-input_new-card-image-link" value={card.link} onChange={handleCardChange} name="link" placeholder="Ссылка на картинку" type="url" required />
+          <input className="popup__form-input popup__form-input_new-card-image-link" value={values.link} onChange={handleChange} name="link" placeholder="Ссылка на картинку" type="url" required />
           <span className="popup__form-input-error link-error"></span>
         </div>
       </fieldset>
