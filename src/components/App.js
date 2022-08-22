@@ -23,12 +23,13 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
-
   const [selectedCard, setSelectedCard] = useState({
       name: '',
       link: '',
       isOpen: false
   });
+
+  const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard.isOpen;
 
   const [cards, setCards] = useState([]);
 
@@ -141,6 +142,20 @@ function App() {
         console.log(err);
       })
   },[]);
+
+  useEffect(() => {
+    function closeByEscape(evt) {
+      if(evt.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    if(isOpen) {
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
