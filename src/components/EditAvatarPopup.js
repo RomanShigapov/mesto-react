@@ -1,7 +1,7 @@
 import { useRef, useEffect} from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoading }) {
 
   const inputAvatarRef = useRef();
 
@@ -20,9 +20,11 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isLoading={isLoading}
       name="replace-avatar"
       title="Обновить аватар"
-      button="Сохранить"
+      buttonText="Сохранить"
+      buttonLoadingText="Сохранение..."
     >
       <fieldset className="popup__form-inputs">
         <div className="popup__form-container">

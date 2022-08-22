@@ -1,4 +1,4 @@
-function PopupWithForm({ name, title, button, children, isOpen, onClose, onSubmit}) {
+function PopupWithForm({ name, title, buttonText, buttonLoadingText, children, isOpen, onClose, onSubmit, isLoading }) {
     return (
       <div className={`popup popup_${name} popup_overlay-opacity_main ${isOpen && 'popup_opened'}`}>
         <div className="popup__container">
@@ -6,7 +6,7 @@ function PopupWithForm({ name, title, button, children, isOpen, onClose, onSubmi
           <h2 className="popup__title">{title}</h2>
           <form className="popup__form" name={`${name}-form`} onSubmit={onSubmit}>
             {children}
-            <button className="popup__form-save-button button button_opacity_high" type="submit">{button}</button>
+            <button className="popup__form-save-button button button_opacity_high" type="submit">{isLoading? buttonLoadingText : buttonText}</button>
           </form>
         </div>
       </div>

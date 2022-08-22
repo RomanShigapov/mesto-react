@@ -12,6 +12,8 @@ import defaultAvatar from '../images/profile.jpg';
 
 function App() {
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const [currentUser, setCurrentUser] = useState({
     name: 'Загрузка...',
     about: '...данных',
@@ -76,6 +78,7 @@ function App() {
   }
 
   function handleUpdateUser({name, about}) {
+    setIsLoading(true);
     Api.setUserInfo({name, about})
     .then(user => {
       setCurrentUser(user);
@@ -84,10 +87,12 @@ function App() {
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(() => setIsLoading(false));
   }
 
   function handleUpdateAvatar(avatar) {
+    setIsLoading(true);
     Api.setUserPic(avatar)
     .then(user => {
       setCurrentUser(user);
@@ -96,7 +101,8 @@ function App() {
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(() => setIsLoading(false));
   }
 
   function closeAllPopups() {
@@ -112,6 +118,7 @@ function App() {
   }
 
   function handleAddPlace({ name, link }) {
+    setIsLoading(true);
     Api.addCard({ name, link })
     .then((card) => {
       setCards([card, ...cards]);
@@ -120,7 +127,8 @@ function App() {
     })
     .catch((err) => {
       console.log(err);
-    });
+    })
+    .finally(() => setIsLoading(false));
   }
 
   useEffect(() => {
@@ -175,16 +183,19 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
+          isLoading={isLoading}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlace}
+          isLoading={isLoading}
         />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
+          isLoading={isLoading}
         />
         <ImagePopup onClose={closeAllPopups} card={selectedCard} />
       </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect} from 'react';
 import PopupWithForm from './PopupWithForm';
 
-function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
 
   const [card, setCard] = useState({
     name: '',
@@ -33,9 +33,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isLoading={isLoading}
       name="new-card"
       title="Новое место"
-      button="Создать"
+      buttonText="Создать"
+      buttonLoadingText="Создание..."
     >
       <fieldset className="popup__form-inputs">
         <div className="popup__form-container">
